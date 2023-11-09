@@ -1,0 +1,30 @@
+import random
+import string
+
+def gerar_chave(tamanho):
+    caracteres = string.ascii_letters + string.digits
+    chave = ''.join(random.choice(caracteres) for _ in range(tamanho))
+    return chave
+
+def criptografar(mensagem):
+    chave = gerar_chave(len(mensagem))
+    mensagem_criptografada = ''.join(chr(ord(c) ^ ord(k)) for c, k in zip(mensagem, chave))
+    return mensagem_criptografada, chave
+
+def descriptografar(mensagem_criptografada, chave):
+    mensagem = ''.join(chr(ord(c) ^ ord(k)) for c, k in zip(mensagem_criptografada, chave))
+    return mensagem
+
+def main():
+    entrada = input("Digite a palavra ou número que deseja criptografar: ")
+    mensagem_criptografada, chave = criptografar(entrada)
+    print("Mensagem criptografada:", mensagem_criptografada)
+
+    palavra_chave = input("Digite a palavra-chave para descriptografar: ")
+    if palavra_chave == "bala":
+        mensagem_descriptografada = descriptografar(mensagem_criptografada, chave)
+        print("Mensagem descriptografada:", mensagem_descriptografada)
+    else:
+        print("A Palavra Chave foi digitada incorretamente.")
+
+main()
